@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-info" role="alert">
+    {% for message in messages %}
+    <p class="mb-0">{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<!-- Movie details -->
+<div class="container mt-4">
+    {% if user_id and user.lists%}
+    <form method="POST" class="mb-4">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.list_select.label(class="form-label") }}
+            {{ form.list_select(class="form-select") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add to List</button>
+    </form>
+    {% else %}
+    <h3>Create a list to add this movie.</h3>
+    <a href="/list/new">
+    <button  class="btn btn-primary">Create List</button>
+    </a>
+    {% endif %}
+    {% if movie %}
+    <div class="card mb-4">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="img-fluid rounded-start"
+                    alt="{{ movie.title }} Poster">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title">{{ movie.title }}</h1>
+                    <p class="card-text"><strong>Overview:</strong> {{ movie.overview }}</p>
+                    <div class="movie-details">
+                        <dl class="row">
+                            <dt class="col-sm-4">Release Date:</dt>
+                            <dd class="col-sm-8">{{ movie.release_date }}</dd>
+
+                            <dt class="col-sm-4">Rating:</dt>
+                            <dd class="col-sm-8">{{ movie.vote_average }} ({{ movie.vote_count }} votes)</dd>
+
+                            <dt class="col-sm-4">Genres:</dt>
+                            <dd class="col-sm-8">
+                                {% for genre in movie.genres %}
+                                {{ genre.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </dd>
+
+                            <dt class="col-sm-4">Original Language:</dt>
+                            <dd class="col-sm-8">{{ movie.original_language }}</dd>
+
+                            <dt class="col-sm-4">Popularity:</dt>
+                            <dd class="col-sm-8">{{ movie.popularity }}</dd>
+
+                            <dt class="col-sm-4">Runtime:</dt>
+                            <dd class="col-sm-8">{{ movie.runtime }} minutes</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        No movie information available.
+    </div>
+    {% endif %}
+
+
+</div>
+{% endblock %}

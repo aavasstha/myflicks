@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+        <p class="mb-0">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- User Links -->
+    {% if 'user_id' in session %}
+    <form method="get">
+        <button formaction="/search" class="btn btn-secondary">Find movies</button>
+        <button formaction="/profile" class="btn btn-secondary">Your Lists</button>
+        <button formaction="/list/new" class="btn btn-secondary">Create lists</button>
+    </form>
+    {% else %}
+    <p><a href="/login" class="btn btn-primary">Login</a></p>
+    <p><a href="/signup" class="btn btn-success">Signup</a></p>
+    <p><a href="/search" class="btn btn-success">Search movies</a></p>
+    {% endif %}
+
+    <!-- Page Title -->
+
+    <!-- Search Button -->
+
+    <!-- Popular Movies -->
+    <h3>Popular movies:</h3>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top img-fluid"
+                    alt="{{ movie.title }} Poster">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <a href="/movie/{{movie.id}}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

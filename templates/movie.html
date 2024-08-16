@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <form method="get" class="mb-4">
+        <button type="submit" formaction="/search" class="btn btn-primary">Find Movies</button>
+    </form>
+    <h1>Search Results</h1>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <a href="/movie/{{movie.id}}" class="text-decoration-none text-dark">
+                    {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top"
+                        alt="{{ movie.title }} Poster">
+                    {% else %}
+                    <img src="path/to/default/image.jpg" class="card-img-top" alt="Default Image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

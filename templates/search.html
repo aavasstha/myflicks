@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+        <p class="mb-0">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Search Form -->
+    <form method="POST" class="mb-4">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        <div class="mb-3">
+            <h3>What movie are you looking for?</h3>
+            <!-- {{ field.label(class="form-label") }} -->
+            {{ field(class="form-control") }}
+            {% for error in field.errors %}
+            <div class="text-danger">
+                {{ error }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+</div>
+{% endblock %}
