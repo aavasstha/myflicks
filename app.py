@@ -201,14 +201,18 @@ def get_movie_details(movie_id):
 # show movie detail
 @app.route("/movie/<int:movie_id>", methods=["GET", "POST"])
 def movie_info(movie_id):
-    user_id=session.get('user_id')
+    user_id = session.get('user_id')
     movie_details = get_movie_details(movie_id)
     form = UserListForm()
-    if "user_id" in session:
-        user=User.query.get(user_id)
+    
+    user = None  # Initialize user to None
+
+    if user_id:
+        user = User.query.get(user_id)
         user_lists = user.lists
         form.list_select.choices = [(user_list.id, user_list.name) for user_list in user_lists]
         selected_list = None
+        
         if form.validate_on_submit():
             # Get the selected list
             selected_list = UserList.query.get(form.list_select.data)
@@ -218,7 +222,7 @@ def movie_info(movie_id):
                 return redirect(f'/movie/{movie_id}')
             else:
                 # create new movie 
-                movie_to_add=Movie(movie_id=movie_id, title=movie_details.get('title'), poster_path=movie_details.get("poster_path"))
+                movie_to_add = Movie(movie_id=movie_id, title=movie_details.get('title'), poster_path=movie_details.get("poster_path"))
                 # add movie to list
                 selected_list.movies.append(movie_to_add)
                 # append movie 
@@ -226,6 +230,7 @@ def movie_info(movie_id):
                 db.session.commit()
                 flash("Movie added")
                 return redirect(f"/list/{selected_list.id}")
+
     return render_template('movie_detail.html', movie=movie_details, form=form, user_id=user_id, user=user)
 
 # route to create new list
