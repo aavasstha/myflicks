@@ -4,7 +4,6 @@ from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
 from forms import SignupForm, LoginForm, SearchForm, AddListForm, UserListForm, RenameListForm
 from models import db, connect_db, User, UserList, Movie
-# from dotenv import load_dotenv
 import os
 
 
