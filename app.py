@@ -6,6 +6,11 @@ from forms import SignupForm, LoginForm, SearchForm, AddListForm, UserListForm, 
 from models import db, connect_db, User, UserList, Movie
 import os
 
+try:
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SUPABASE_URI')
@@ -19,6 +24,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 bcrypt=Bcrypt()
+
 
 def get_popular_movies():
     url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1"
