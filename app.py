@@ -6,11 +6,6 @@ from forms import SignupForm, LoginForm, SearchForm, AddListForm, UserListForm, 
 from models import db, connect_db, User, UserList, Movie
 import os
 
-try:
-    from collections.abc import Mapping
-except ImportError:
-    from collections import Mapping
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SUPABASE_URI')
