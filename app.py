@@ -258,7 +258,7 @@ def show_list_detail(list_id):
         return redirect('/login')
     list=UserList.query.get(list_id)
     movies=list.movies
-    return render_template("list-detail.html", lists=list, movies=movies)
+    return render_template("list_detail.html", lists=list, movies=movies)
 
 # route to removing movie from a list
 @app.route("/list/<int:list_id>/movie/<int:movie_id>/delete")
