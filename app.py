@@ -20,7 +20,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 bcrypt=Bcrypt()
 
-
+# get popular movies from api
 def get_popular_movies():
     url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1"
     headers = {
@@ -43,6 +43,7 @@ def get_popular_movies():
         flash("something went wrong.")
         return render_template("404.html")
 
+# create a new user tmdb access token
 def create_tmdb_token():
     url = "https://api.themoviedb.org/3/authentication/token/new"
     headers = {
