@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+{% block content%}
+<h1>{{lists.name}}</h1>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+        <p class="mb-0">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+<ul>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top img-fluid"
+                    alt="{{ movie.title }} Poster">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <a href="/movie/{{movie.movie_id}}" class="btn btn-primary">View Details</a>
+                    <a href="/list/{{lists.id}}/movie/{{movie.id}}/delete" class="btn btn-primary danger" class="btn btn-primary">Remove</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</ul>
+<form method="get">
+    <button formaction="/search" class="btn btn-primary">Add movie to list</button>
+    <button formaction="/list/{{lists.id}}/rename" class="btn btn-primary">Rename list</button>
+    <button formaction="/list/{{lists.id}}/delete" class="btn btn-primary">Delete list</button>
+</form>
+
+
+
+{% endblock %}
