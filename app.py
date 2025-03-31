@@ -7,11 +7,13 @@ from flask_debugtoolbar import DebugToolbarExtension
 import os
 
 app = Flask(__name__)
+URI =os.getenv("SUPABASE_URI")
+SECRET =os.getenv("SUPABASE_URI")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres.eduudvvgrhjpnkrjuegx:Ao0hwJxHQKfDpQCd@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
+app.config['SQLALCHEMY_DATABASE_URI'] = URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SECRET_KEY'] =  'my-very-secret-key'
+app.config['SECRET_KEY'] =  SECRET
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 # Connect to the database
