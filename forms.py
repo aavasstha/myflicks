@@ -1,7 +1,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from wtforms.fields.html5 import EmailField
 from models import UserList
 
@@ -10,7 +10,7 @@ class SignupForm(FlaskForm):
     last_name=StringField("Last Name", validators=[DataRequired('Please enter your last name. ')])
     username=StringField("Username", validators=[DataRequired('Please create a unique username.')])
     email=EmailField("Email", validators=[DataRequired('Please enter a valid email')])
-    password =PasswordField("Password", validators=[DataRequired('Plase create a password')])
+    password =PasswordField("Password", validators=[DataRequired('Plase create a password'), Length(min=8, message='Password must be at least 8 characters long')])
 
 class LoginForm(FlaskForm):
     username=StringField("Username", validators=[DataRequired('Please enter your username')])
